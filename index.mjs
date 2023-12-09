@@ -1,25 +1,23 @@
 import dotenv from 'dotenv';
 import express, { Router } from 'express';
 import cors from 'cors';
-import serverless from 'serverless-http';
 import path from 'path';
-import pool from '../../src/pool/pool.js';
-
-import { router as addressRoutes } from '../../src/routes/AddressRoutes.js';
-import { router as authRoutes } from '../../src/routes/AuthRoutes.js';
-import { router as productRoutes } from '../../src/routes/ProductRoutes.js';
-import { router as cartRoutes } from '../../src/routes/CartRoutes.js';
-import { router as categoryRoutes } from '../../src/routes/CategoryRoutes.js';
-import { router as wishlistRoutes } from '../../src/routes/WishlistRoutes.js';
-import ExpressError from '../../error/ExpressError.js';
+import { router as addressRoutes } from './src/routes/AddressRoutes.js';
+import { router as authRoutes } from './src/routes/AuthRoutes.js';
+import { router as productRoutes } from './src/routes/ProductRoutes.js';
+import { router as cartRoutes } from './src/routes/CartRoutes.js';
+import { router as categoryRoutes } from './src/routes/CategoryRoutes.js';
+import { router as wishlistRoutes } from './src/routes/WishlistRoutes.js';
+import ExpressError from './error/ExpressError.js';
+import pkg from 'pg';
 
 /* Postgres connection */
-dotenv.config({path: path.join(path.resolve(), '../../.env')});
+dotenv.config();
 
 
 /* app initialization */
 const app = express();
-const port = 3001;
+const { Pool } = pkg;
 /* Express Routing */
 // const allowCrossDomain = (req, res, next) => {
 //     res.header(`Access-Control-Allow-Origin`, `*`);
@@ -59,18 +57,15 @@ app.use((err, req, res, next) => {
     res.status(statusCode).json({ error: message });
 });
 
-try {
-    const poolConnectResponse = await pool.connect({
-        host: 'localhost',
-        port: 5432,
-        database: 'flashBackend',
-        user: 'postgres',
-        password: 'postgres'
-    }); 
-    
-} catch (error) {
-    console.error(error);
-}
+const PORT = process.env.PORT || 3005;
+app.listen(process.env.PORT, () => console.log("Server is running on port 5000"))
 
 
-export const handler = serverless(app);
+const pool = new Pool({
+  connectionString: process.env.POSTGRES_URL + "?sslmode=require",
+})
+
+pool.connect((err) => {
+    if (err) throw err
+    console.log("Connect to PostgreSQL successfully!")
+})
