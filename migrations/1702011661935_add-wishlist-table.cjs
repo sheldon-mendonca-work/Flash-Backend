@@ -10,7 +10,7 @@ exports.up = pgm => {
             product_id uuid REFERENCES products(_id) ON DELETE CASCADE,
             created_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP,
             updated_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP,
-            UNIQUE(userId, productId)
+            UNIQUE(user_id, product_id)
         );
     `)
 };

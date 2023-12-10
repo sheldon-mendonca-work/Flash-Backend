@@ -46,6 +46,10 @@ app.use("/api/user/wishlist", wishlistRoutes);
 
 app.get("/", (req, res, next) => {
     res.status(200).send("Welcome to flash backend.")
+});
+
+app.get("/hello", (req, res, next) => {
+    res.status(200).send("Hello.")
 })
 
 app.all('*', async (req, res, next) => {
