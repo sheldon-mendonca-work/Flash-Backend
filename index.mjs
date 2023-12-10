@@ -64,17 +64,13 @@ const PORT = process.env.PORT || 3005;
 app.listen(process.env.PORT, () => console.log("Server is running on port 5000"))
 
 
-const pool = new Pool({
-  connectionString: process.env.POSTGRES_URL + "?sslmode=require",
-})
-
-
 pool.connect({
     host: process.env.PG_HOST,
     port: 5432,
     database: process.env.PG_DATABASE,
     user: process.env.PG_USER,
-    password: process.env.PG_PASSWORD
+    password: process.env.PG_PASSWORD,
+    connectionString: process.env.POSTGRES_URL + "?sslmode=require",
 }, (err) => {
     if (err){
         console.log("Something went wrong##############") 
