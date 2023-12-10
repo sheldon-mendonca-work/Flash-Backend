@@ -9,7 +9,7 @@ import { router as cartRoutes } from './src/routes/CartRoutes.js';
 import { router as categoryRoutes } from './src/routes/CategoryRoutes.js';
 import { router as wishlistRoutes } from './src/routes/WishlistRoutes.js';
 import ExpressError from './error/ExpressError.js';
-import pkg from 'pg';
+import pool from './src/pool/pool.js';
 
 /* Postgres connection */
 dotenv.config();
@@ -17,7 +17,6 @@ dotenv.config();
 
 /* app initialization */
 const app = express();
-const { Pool } = pkg;
 /* Express Routing */
 // const allowCrossDomain = (req, res, next) => {
 //     res.header(`Access-Control-Allow-Origin`, `*`);
@@ -69,7 +68,19 @@ const pool = new Pool({
   connectionString: process.env.POSTGRES_URL + "?sslmode=require",
 })
 
-pool.connect((err) => {
-    if (err) throw err
-    console.log("Connect to PostgreSQL successfully!")
-})
+
+pool.connect({
+    host: process.env.PG_HOST,
+    port: 5432,
+    database: process.env.PG_DATABASE,
+    user: process.env.PG_USER,
+    password: process.env.PG_PASSWORD
+}, (err) => {
+    if (err){
+        console.log("Something went wrong##############") 
+        throw err
+        }
+    })
+    .then(()=>{
+        console.log("Connect to PostgreSQL successfully!");
+    })
