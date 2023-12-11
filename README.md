@@ -1,29 +1,21 @@
-# [Flash - Backend](https://mocha-sheldon.netlify.app/)
-## [Back-end](https://sheldon-mocha-backend.netlify.app/)
+# [Flash - Backend](https://flash-backend-ver1-sheldon-mendoncas-projects.vercel.app)
+## [Front-end](https://master--flash-kart.netlify.app/)
 This is the back-end for the social media app: Mocha.
-This app has been designed using [React(front-end)](https://github.com/sheldon-mendonca-work/Mocha-frontend), express(middleware and backend) and MongoDB Atlas.
-The functionality of this app is inspired by Twitter.
+This app has been designed using express, Postgres and awt authentication.
 
 ## Tech Stack
 - Authentication via JWT
-- Moongoose. [Click for models](https://github.com/sheldon-mendonca-work/Mocha-Backend/tree/main/src/models)
-- Upload and delete media functionality via cloudinary
-- Express server deployed on Netlify.
-- MongoDB database.
+- Postgres with Express. 
+- PG-Migrations for tracking changes to database; 
+- Express server deployed on Vercel.
+- Postgres database deployed on Vercel.
 - CORS handling.
-- Netlify functions.
 
 ## Features
-- Routing certain paths based on user authentication. Headers from request are used with JWT decoding.
-- Mongoose ODM including foreign references for posts, images. Populate and selection of required data is done as per requirements.
-- Create/edit a user. Default profile and banner images if not entered. Set token as per JWT encoding.
-- Follow/Unfollow functionality by updating current user as well as following user.
-- Like/Bookmark post by updating post as well as the user details.
-- Show list of all likes/bookmarks for a post.
-- Add post and set up media based on received cloudinary data.
-- Add a comment in form of post. Link comment to parent post if needed.
-- Add/edit media and upload/destroy from cloudinary.
-- Get all posts from a user.
-- Handle deleting a post. Includes updating all likes, bookmarks, parent post, comment post and user details.
-- Delete a user. Includes deleting all posts, likes, bookmarks and media automatically. Also update followers, following for other users correspondingly
-- Handle search functionality by searching for username or displayName.
+- Queries are written in SQL
+- One-to-Many and Many-To-Many relationship tables used as per normalization rules.
+- SQL injection is taken care of with prepared queries.
+- Merging of data of various queries is done in express.
+- Snake casing is followed for SQL Tables and Camel casing is followed for ExpressJS as per latest standards.
+- Keys from SQL results are parsed and formatted to make it compatible with JS.
+- UNIQUE, NOT NULL and DEFAULT checks are done from client, server and database level to ensure data is consistent across all stacks.  
